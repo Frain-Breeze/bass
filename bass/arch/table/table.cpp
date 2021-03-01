@@ -1,4 +1,5 @@
 #define arch(name) static string Arch_##name
+#include "lasm.arch"
 #include "nes-cpu.arch"
 #include "pce-cpu.arch"
 #include "snes-cpu.arch"
@@ -40,6 +41,7 @@ bool BassTable::assemble(const string& statement) {
     string data;
     if(0);
     else if(s == "reset") data = "";
+	else if(s == "lasm.cpu") data = Arch_lasm_cpu;
     else if(s == "nes.cpu") data = Arch_nes_cpu;
     else if(s == "pce.cpu") data = Arch_pce_cpu;
     else if(s == "snes.cpu") data = Arch_snes_cpu;

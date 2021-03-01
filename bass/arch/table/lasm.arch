@@ -1,0 +1,52 @@
+// LASM CPU
+
+//constants are set to 16 bits, since 12 results in just one byte getting added
+//the operands will be merged before being written to the CPU, so it's fine
+//so for ease of operation we'll do 16bits for the opcode and then 16bits for data, which we can merge later
+
+arch(lasm_cpu) = R"(
+mov a,d		;$00 $41
+mov d,x		;$00 $43
+mov d,y		;$00 $45
+
+mov *12,x	;~a %0000
+mov *12,y	;~a %0010
+mov *12,d	;~a %0100
+mov *12,rd	;~a %0110
+
+mov *12,pc	;~a %1110
+jmp *13		;>>01a %1110
+
+add			;%00010000 %00100001
+)";
+
+
+/*
+mov a,d		;$41 $00 $00 $00
+mov d,x		;$43 $00 $00 $00
+
+
+mov *16,x	;$00 $00 ~a
+mov *16,y	;$02 $00 ~a
+mov *16,d	;$04 $00 ~a
+mov *16,rd	;$06 $00 ~a
+
+
+
+jmp *16 	;$07 $00 >>02a
+
+add			;$21 $00 $00 $00
+*/
+
+/*
+mov a,d		;$00 $41
+mov d,x		;$00 $43
+
+mov *12,x	;~a %0000
+mov *12,y	;~a %0010
+mov *12,d	;~a %0100
+mov *12,rd	;~a %0110
+
+//jmp			;$00 $
+//jmp *13		;>>01a %
+*/
